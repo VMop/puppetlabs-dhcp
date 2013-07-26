@@ -43,9 +43,12 @@ class dhcp (
   }
 
   # OS Specifics
-  case $operatingsystem {
+  case $::operatingsystem {
     'debian','ubuntu': {
       include dhcp::debian
+    }
+    default {
+      fail("Module ${module_name} is not supported on ${$::operatingsystem}")
     }
   }
 
@@ -77,7 +80,7 @@ class dhcp (
   # Using DDNS will require a dhcp::ddns class composition, else, we should
   # turn it off.
   unless ( $ddns ) {
-    class { "dhcp::ddns": enable => false; }
+    class { 'dhcp::ddns': enable => false; }
   }
 
   # Any additional dhcpd.conf fragments the user passed in as a hash for
