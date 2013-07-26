@@ -8,7 +8,7 @@ class dhcp::debian {
   $servicename     = $dhcp::params::servicename
   $dhcp_interfaces = $dhcp::dhcp_interfaces
 
-  case $operatingsystem {
+  case $::operatingsystem {
     'debian','ubuntu': {
       file{ '/etc/default/isc-dhcp-server':
         ensure  => present,
@@ -19,6 +19,9 @@ class dhcp::debian {
         notify  => Service[$servicename],
         content => template('dhcp/debian/default_isc-dhcp-server'),
       }
+    }
+    default {
+      fail("Module ${module_name} is not supported on ${::operatingsystem}")
     }
   }
 }

@@ -1,6 +1,6 @@
 class dhcp::params {
 
-  case $operatingsystem {
+  case $::operatingsystem {
     'debian': {
       $dhcp_dir    = '/etc/dhcp'
       $packagename = 'isc-dhcp-server'
@@ -32,6 +32,9 @@ class dhcp::params {
       $dhcp_dir    = '/etc/dhcp'
       $packagename = 'dhcp'
       $servicename = 'dhcpd'
+    }
+    default {
+      fail("Module ${module_name} is not supported on ${::operatingsystem}")
     }
   }
 

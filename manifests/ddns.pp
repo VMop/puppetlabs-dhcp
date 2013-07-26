@@ -3,7 +3,7 @@ class dhcp::ddns (
   $dhcp_conf_ddns = 'dhcp/dhcpd.conf.ddns.erb',   # default template
   $zonemaster     = $fqdn,
   $key            = '',
-  $domains        = [ $domain ]
+  $domains        = [ $::domain ]
 ) {
 
   include dhcp::params
